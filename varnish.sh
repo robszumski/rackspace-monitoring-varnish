@@ -28,4 +28,14 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+# calculate hit percent
+hits=$(/usr/bin/varnishstat -1 -f cache_hit | awk '$2>0 {print $2}')
+misses=$(/usr/bin/varnishstat -1 -f cache_miss | awk '$2>0 {print $2}')
+hit_percent=$(echo "scale=8;($misses/$hits)" | bc | awk '{printf "%f", 100-($1*100)}')
+echo "metric hit_percent double "$hit_percent
+
+# calculate # of healthy backends
+healthy=$(varnishadm debug.health | grep -c "Healthy")
+echo "metric healthy_backends int32" $healthy
+
 /usr/bin/varnishstat -1 -f $1 | awk ' { print "metric " $1 " gauge " $2 } '
