@@ -27,6 +27,9 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
+#
+# See https://github.com/robszumski/rackspace-monitoring-varnish for a readme
+# and more information
 
 # calculate hit percent
 hits=$(/usr/bin/varnishstat -1 -f cache_hit | awk '$2>0 {print $2}')
